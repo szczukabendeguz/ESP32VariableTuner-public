@@ -18,7 +18,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/ide_jon_majd_ahova_tenyleg_publikalom/ESP32VariableTuner"
+    "url": "https://github.com/szczukabendeguz/ESP32VariableTuner-public"
   },
   "license": "MIT",
   "frameworks": "arduino",
