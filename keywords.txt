@@ -1,0 +1,36 @@
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+VarMonitor	KEYWORD1
+VariableBase	KEYWORD1
+FloatVariable	KEYWORD1
+IntVariable	KEYWORD1
+BoolVariable	KEYWORD1
+StringVariable	KEYWORD1
+VariableRegistry	KEYWORD1
+ProfileManager	KEYWORD1
+VarMonitorServer	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+registerFloat	KEYWORD2
+registerInt	KEYWORD2
+registerBool	KEYWORD2
+registerString	KEYWORD2
+begin	KEYWORD2
+handle	KEYWORD2
+enableAutoLoad	KEYWORD2
+getIPAddress	KEYWORD2
+saveProfile	KEYWORD2
+loadProfile	KEYWORD2
+deleteProfile	KEYWORD2
+listProfilesAsJSON	KEYWORD2
+broadcastAll	KEYWORD2
+getAllVariablesAsJSON	KEYWORD2
+setVariableValue	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+MAX_VARIABLES	LITERAL1
