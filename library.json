@@ -1,6 +1,6 @@
 {
   "name": "ESP32VariableTuner",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Real-time variable monitoring and tuning for ESP32 with built-in WebUI, WebSocket sync, and profile management.",
   "keywords": [
     "esp32",
