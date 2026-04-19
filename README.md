@@ -2,7 +2,7 @@
 
 A library for real-time variable tuning and monitoring on ESP32 through an embedded Web UI.
 
-![Web UI](UI.png)
+![Web UI](https://github.com/szczukabendeguz/ESP32VariableTuner-public/blob/main/UI.png?raw=true)
 
 ## What it does
 
