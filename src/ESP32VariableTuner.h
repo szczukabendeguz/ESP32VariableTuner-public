@@ -5,7 +5,7 @@
  * @brief Real-time variable monitoring and tuning library for ESP32 with web interface.
  * 
  * Library Name: ESP32VariableTuner
- * Version: 1.0.2
+ * Version: 1.0.4
  * Author: Szczuka Bendegúz András
  */
 

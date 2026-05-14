@@ -44,7 +44,7 @@ void loop() {
 }
 ```
 
-## Main API
+## C++ API Reference
 
 ### `VarMonitor(uint16_t port = 80)`
 Constructs a new `VarMonitor` instance.
@@ -149,3 +149,68 @@ With `VM_EMBED_WEBUI=0`:
 - `/api/*` and `/ws` stay available
 - root route `/` returns API-mode message
 - embedded UI assets are excluded to reduce footprint
+
+### REST API Documentation (Headless usage)
+
+The ESP32 controller exposes a full REST API and a WebSocket endpoints for integrating with custom clients. Responses are JSON formatted.
+
+#### Authentication
+
+If `adminPassword` is provided in `monitor.begin()`, all API and WebSocket endpoints become protected.
+First, a token must be acquired:
+
+- **Endpoint**: `POST /api/login`
+- **Payload**: `{"password": "your_password"}`
+- **Response**: `{"ok":true, "auth":true, "token":"<YOUR_TOKEN>"}`
+
+Pass this token in subsequent requests using one of these methods:
+1. HTTP Header: `Authorization: Bearer <YOUR_TOKEN>`
+2. Cookie: `vm_token=<YOUR_TOKEN>`
+3. URL Query Parameter: `?token=<YOUR_TOKEN>` (E.g. for WebSocket connections)
+
+#### Endpoints
+
+- `GET /api/variables`
+  Returns all registered variables grouped and their current values.
+- `POST /api/variable`
+  Update a variable's value. Body: `{"name":"varName", "value":"newValue"}`
+- `GET /api/profiles`
+  List all saved profile names.
+- `POST /api/profile/save`
+  Save current state to a profile. Parameter or Body: `{"name":"profileName"}`
+- `POST /api/profile/load`
+  Load a profile into active memory. Parameter or Body: `{"name":"profileName"}`
+- `DELETE /api/profile` (or `POST /api/profile/delete`)
+  Delete a profile. Parameter or Body: `{"name":"profileName"}`
+- `GET /api/profile/autoload` / `POST /api/profile/autoload?enable=true|false`
+  Get or configure the startup auto-load behavior.
+
+#### WebSocket (`/ws`)
+
+Connect to `ws://<ip>/ws?token=<YOUR_TOKEN>` for real-time state streaming.
+
+**Server to Client (Updates):**
+When a client connects or any variable value changes, the server broadcasts an immediate state update in the following JSON format:
+```json
+{"variables": [
+  {
+    "name": "VarName", 
+    "type": "float", 
+    "value": "1.2500", 
+    "min": 0.0, 
+    "max": 10.0, 
+    "step": 0.1, 
+    "group": "Control", 
+    "readonly": false
+  }
+]}
+```
+
+**Client to Server (Commands):**
+To change a variable's value from the client side, send a JSON text frame to the server:
+```json
+{"action": "set", "name": "VarName", "value": "1.50"}
+```
+*(Note: even for numbers, passing the value as a JSON string is fully supported and recommended to avoid parsing ambiguities).*
+
+The server rate-limits client inputs to max 20 messages per second. If the update is successful, the server automatically broadcasts the new state back to all connected WebSocket clients.
